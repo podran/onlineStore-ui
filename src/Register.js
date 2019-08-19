@@ -4,22 +4,23 @@ import { validateScheme } from './models/user';
 
 export class Register extends Component {
 
-    send(e) {
-        e.preventDefault();
-        fetch({
+    send(values) {
+        fetch('http://localhost:9000/api/user', {
             method: 'PUT',
-            body: JSON.stringify(this.state),
+            body: JSON.stringify(values),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
+        .then(() => this.props.history.push('/login'));
     }
 
     render() {
         return (
             <Formik
                 initialValues={{ name: '', email: '', age: '', password: '' }}
-                validationSchema={validateScheme}>
+                validationSchema={validateScheme}
+                onSubmit={this.send.bind(this)}>
                 <Form>
                     <div>
                         <Field type="text" name="name" placeholder="Enter Name" />
