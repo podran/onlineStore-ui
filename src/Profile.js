@@ -1,16 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import userService from './services/user.service'
 
 export class Profile extends Component {
     componentDidMount() {
-        const token = document.cookie.split('user=')[1];
-        fetch('http://localhost:9000/api/user/me', {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: token
-            }
-        })
-        .then(res => res.json())
-        .then(user => console.log(user));
+        userService
+            .me()
+            .then(res => res.json())
+            .then(user => console.log(user))
+            .catch(err => console.log(err));
     }
     render() {
         return (

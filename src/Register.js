@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { validateScheme } from './models/user';
+import UserService from './services/user.service'
 
 export class Register extends Component {
 
     send(values) {
-        fetch('http://localhost:9000/api/user', {
-            method: 'PUT',
-            body: JSON.stringify(values),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(() => this.props.history.push('/login'));
+        UserService
+        .create(values)
+        .then(() => this.props.history.push('/login'))
+        .catch(err => console.log(err));
     }
 
     render() {

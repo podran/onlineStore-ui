@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { validateScheme } from './models/user';
+import UserService from './services/user.service'
+
 
 export class Login extends Component {
-
+    
     send(values) {
-        fetch('http://localhost:9000/api/user/login', {
-            method: 'POST',
-            body: JSON.stringify(values),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+        UserService
+            .login(values)
             .then((res) => res.json())
-            .then(res => document.cookie = "user=" + res.token);
+            .then(res => document.cookie = "user=" + res.token)
+            .catch(err => console.log(err));
     }
 
     render() {
