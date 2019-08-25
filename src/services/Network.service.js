@@ -12,9 +12,16 @@ export default class Network {
     }
 
     send(method, url, data) {
+        let JSONData;
+        try {
+            JSONData = JSON.stringify(data);
+        }
+        catch(err) {
+            console.log(err);
+        }
         return fetch('http://localhost:9000/api' + url, {
             method,
-            body: JSON.stringify(data),
+            body: JSONData,
             headers: this.getHeaders()
         })
     }

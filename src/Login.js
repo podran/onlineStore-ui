@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import UserService from './services/user.service'
+import UserService from './services/user.service';
 
 
 export class Login extends Component {
@@ -9,7 +9,10 @@ export class Login extends Component {
         UserService
             .login(values)
             .then((res) => res.json())
-            .then(res => document.cookie = "user=" + res.token)
+            .then(res => {
+                document.cookie = "user=" + res.token;
+                this.props.history.push('/');
+            })
             .catch(err => console.log(err));
     }
 

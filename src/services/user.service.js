@@ -1,4 +1,4 @@
-import Network from './Network.service'
+import Network from './Network.service';
 
 class UserService extends Network{
     getAll() {
