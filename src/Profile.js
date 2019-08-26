@@ -54,7 +54,7 @@ export class Profile extends Component {
     render() {
         return (
             <Row className="d-flex justify-content-center my-3">
-                <Col md={6}>
+                <Col xs={6} lg={4}>
                     <h1>Profile</h1>
                     {this.state.logged ?
                         <div>

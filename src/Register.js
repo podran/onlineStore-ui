@@ -4,11 +4,25 @@ import { validateScheme } from './models/user';
 import UserService from './services/user.service'
 
 export class Register extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            submitting: false
+        }
+    }
 
     send(values) {
+        this.setState({
+            submitting: true
+        });
         UserService
         .create(values)
-        .then(() => this.props.history.push('/login'))
+        .then(() => {
+            this.setState({
+                submitting: false
+            });
+            this.props.history.push('/login');
+        })
         .catch(err => console.log(err));
     }
 
@@ -36,7 +50,7 @@ export class Register extends Component {
                         <ErrorMessage name="password" component="div" />
                     </div>
                     <div>
-                        <input type="submit" />
+                        <input type="submit" disabled={this.state.submitting}/>
                     </div>
                 </Form>
             </Formik>

@@ -6,6 +6,7 @@ import HomePage from './HomePage';
 import Login from './Login';
 import Header from './Header';
 import Profile from './Profile';
+import Category from './Category';
 
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
         <Route path="/" exact component={HomePage} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/profile" component={Profile}/>    
+        <Route path="/profile" component={Profile} />
+        <Route path="/category/:id" component={Category} />    
       </div>
     </Router>
   );

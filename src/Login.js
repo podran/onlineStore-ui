@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import UserService from './services/user.service';
+import cookie from 'react-cookies';
 
 
 export class Login extends Component {
     
     send(values) {
+        const twoWeeksTime = 60*60*24*14;
         UserService
             .login(values)
             .then((res) => res.json())
             .then(res => {
-                document.cookie = "user=" + res.token;
+                cookie.save('user', res.token, { path: '/', maxAge: twoWeeksTime })
                 this.props.history.push('/');
             })
             .catch(err => console.log(err));

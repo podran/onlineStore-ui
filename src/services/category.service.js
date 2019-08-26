@@ -8,6 +8,7 @@ class CategoryService extends Network{
     create(category) {
         return this.send('PUT', '/category', category);
     }
+
 }
 
 export default new CategoryService();
