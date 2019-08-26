@@ -23,11 +23,11 @@ export class Login extends Component {
                 onSubmit={this.send.bind(this)}>
                 <Form>
                     <div>
-                        <Field type="text" name="email" placeholder="Enter email" />
+                        <Field type="email" name="email" placeholder="Enter email" />
                         <ErrorMessage name="email" component="div" />
                     </div>
                     <div>
-                        <Field type="text" name="password" placeholder="Enter password" />
+                        <Field type="password" name="password" placeholder="Enter password" />
                         <ErrorMessage name="password" component="div" />
                     </div>
                     <div>

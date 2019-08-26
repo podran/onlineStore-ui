@@ -16,6 +16,9 @@ class UserService extends Network{
     login(data) {
         return this.send('POST', '/user/login', {email: data.email, password: data.password})
     }
+    update(id, data) {
+        return this.send('POST', `/user/${id}`, data);
+    }
 }
 
 export default new UserService();

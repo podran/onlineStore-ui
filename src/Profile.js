@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import userService from './services/user.service';
 import { Tabs, Tab, Col, Row } from 'react-bootstrap';
-import { List, ListItem, ListItemText, Divider, Avatar, ListItemAvatar } from '@material-ui/core';
-import {PersonSharp, EmailSharp, SentimentDissatisfiedSharp} from '@material-ui/icons'
+import { Fab } from '@material-ui/core';
+import { PersonSharp, EmailSharp, SentimentDissatisfiedSharp, EditSharp, CheckCircleSharp } from '@material-ui/icons'
+import { Formik, Field, Form } from 'formik';
+import { TextField } from 'formik-material-ui';
+import { simpleValidateScheme } from './models/user';
+
 
 export class Profile extends Component {
     constructor(props) {
@@ -10,7 +14,8 @@ export class Profile extends Component {
         this.state = {
             user: {},
             tab: 0,
-            logged: false
+            logged: false,
+            edit: false
         }
     }
     componentDidMount() {
@@ -25,55 +30,108 @@ export class Profile extends Component {
                 console.log(err);
                 this.setState({
                     logged: false
-                })       
+                })
             });
+    }
+    send(values, { setSubmitting, setErrors, setStatus, resetForm }) {
+        userService.update(this.state.user._id, values)
+            .then((res) => res.json())
+            .then(user => {
+                resetForm({
+                    name: user.name,
+                    email: user.email,
+                    age: user.age
+                });
+                setStatus({ success: true })
+                this.setState({
+                    user,
+                    edit: false
+                })
+            })
+            .catch(err => console.log(err));
     }
     render() {
         return (
             <Row className="d-flex justify-content-center my-3">
                 <Col md={6}>
                     <h1>Profile</h1>
-                    {this.state.logged ? 
-                    <Tabs defaultActiveKey="profile" id="noanim-tab-example">
-                        <Tab eventKey="profile" title="Profile">
-                            <List>
-                                {this.state.user.name ? <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <PersonSharp />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={this.state.user.name} />
+                    {this.state.logged ?
+                        <div>
 
-                                </ListItem> : ''}
-                                <Divider variant="fullWidth" component="li" />
-                                {this.state.user.email ? <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <EmailSharp />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={this.state.user.email} />
+                            <Tabs defaultActiveKey="profile" id="noanim-tab-example">
+                                <Tab eventKey="profile" title="Profile">
 
-                                </ListItem> : ''}
-                                <Divider variant="fullWidth" component="li" />
-                                {this.state.user.age ? <ListItem>
-                                    <ListItemAvatar>
-                                        <Avatar>
-                                            <SentimentDissatisfiedSharp />
-                                        </Avatar>
-                                    </ListItemAvatar>
-                                    <ListItemText primary={this.state.user.age} />
+                                    <Formik
+                                        initialValues={{
+                                            name: this.state.user.name,
+                                            email: this.state.user.email,
+                                            age: this.state.user.age
+                                        }}
+                                        validationSchema={simpleValidateScheme}
+                                        onSubmit={this.send.bind(this)}>
+                                        <Form className="d-flex flex-column my-3">
 
-                                </ListItem> : ''}
 
-                            </List>
-                        </Tab>
-                        <Tab eventKey="purchases" title="Purchases">
-                            purchases
-                        </Tab>
-                    </Tabs>
-                     : 'You Cannot Be Here'}
+                                            <Field
+                                                type="text"
+                                                className="my-3"
+                                                name="name"
+                                                component={TextField}
+                                                InputProps={{
+                                                    readOnly: !this.state.edit
+                                                }}
+                                            />
+
+
+
+                                            <Field
+                                                type="email"
+                                                className="my-3"
+                                                name="email"
+                                                component={TextField}
+                                                InputProps={{
+                                                    readOnly: !this.state.edit,
+                                                }}
+                                            />
+
+
+
+                                            <Field
+                                                type="number"
+                                                className="my-3"
+                                                name="age"
+                                                component={TextField}
+                                                InputProps={{
+                                                    readOnly: !this.state.edit,
+                                                }}
+                                            />
+
+                                            <div className="d-flex justify-content-end">
+
+                                                {this.state.edit ?
+                                                    <Fab color="primary" aria-label="accept" size="small" type="submit" component="button">
+                                                        <CheckCircleSharp />
+                                                    </Fab>
+                                                    :
+                                                    <Fab color="secondary" aria-label="edit" size="small" onClick={() => this.setState({ edit: !this.state.edit })}>
+                                                        <EditSharp />
+                                                    </Fab>
+                                                }
+
+                                            </div>
+                                        </Form>
+                                    </Formik>
+                                </Tab>
+
+
+
+                                <Tab eventKey="purchases" title="Purchases">
+                                    purchases
+                            </Tab>
+                            </Tabs>
+
+                        </div>
+                        : 'You Cannot Be Here'}
                 </Col>
             </Row>
         )
