@@ -113,7 +113,7 @@ export class Profile extends Component {
                                                         <CheckCircleSharp />
                                                     </Fab>
                                                     :
-                                                    <Fab color="secondary" aria-label="edit" size="small" onClick={() => this.setState({ edit: !this.state.edit })}>
+                                                    <Fab color="secondary" aria-label="edit" size="small" onClick={() => this.setState({ edit: true })}>
                                                         <EditSharp />
                                                     </Fab>
                                                 }
