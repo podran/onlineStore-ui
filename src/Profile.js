@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import userService from './services/user.service';
 import { Tabs, Tab, Col, Row } from 'react-bootstrap';
 import { Fab } from '@material-ui/core';
-import { PersonSharp, EmailSharp, SentimentDissatisfiedSharp, EditSharp, CheckCircleSharp } from '@material-ui/icons'
+import { PersonSharp, EmailSharp, SentimentDissatisfiedSharp, EditSharp, CheckCircleSharp, CancelSharp } from '@material-ui/icons'
 import { Formik, Field, Form } from 'formik';
 import { TextField } from 'formik-material-ui';
 import { simpleValidateScheme } from './models/user';
@@ -17,6 +17,7 @@ export class Profile extends Component {
             logged: false,
             edit: false
         }
+        this.form = React.createRef();
     }
     componentDidMount() {
         userService
@@ -67,6 +68,7 @@ export class Profile extends Component {
                                             email: this.state.user.email,
                                             age: this.state.user.age
                                         }}
+                                        ref={this.form}
                                         validationSchema={simpleValidateScheme}
                                         onSubmit={this.send.bind(this)}>
                                         <Form className="d-flex flex-column my-3">
@@ -109,9 +111,21 @@ export class Profile extends Component {
                                             <div className="d-flex justify-content-end">
 
                                                 {this.state.edit ?
-                                                    <Fab color="primary" aria-label="accept" size="small" type="submit" component="button">
-                                                        <CheckCircleSharp />
-                                                    </Fab>
+                                                    <div>
+                                                        <Fab color="primary" aria-label="accept" size="small" type="submit" component="button">
+                                                            <CheckCircleSharp />
+                                                        </Fab>
+                                                        <Fab color="secondary" aria-label="cancel" size="small" onClick={() => {
+                                                            this.setState({ edit: false});
+                                                            this.form.current.resetForm({
+                                                                name: this.state.user.name,
+                                                                email: this.state.user.email,
+                                                                age: this.state.user.age
+                                                            });
+                                                            }}>
+                                                            <CancelSharp />
+                                                        </Fab>
+                                                    </div>
                                                     :
                                                     <Fab color="secondary" aria-label="edit" size="small" onClick={() => this.setState({ edit: true })}>
                                                         <EditSharp />
