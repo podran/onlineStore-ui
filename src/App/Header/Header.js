@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, NavLink } from "react-router-dom";
 import { Navbar, Nav } from 'react-bootstrap';
 import './Header.scss';
-import userService from './services/user.service';
+import userService from '../../services/user.service';
 
 export class Header extends Component {
     constructor(props) {

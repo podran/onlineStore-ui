@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import UserService from './services/user.service';
+import UserService from '../../services/user.service';
 import cookie from 'react-cookies';
 
 

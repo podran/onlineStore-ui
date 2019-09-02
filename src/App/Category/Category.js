@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import productService from './services/product.service'
+import productService from '../../services/product.service'
 
 export class Category extends Component {
     constructor(props) {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Carousel, Col, Row } from 'react-bootstrap';
 
-import Categories from './Categories';
+import Categories from './Categories/Categories';
 
 export class HomePage extends Component {
 

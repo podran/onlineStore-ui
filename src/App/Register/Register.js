@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { validateScheme } from './models/user';
-import UserService from './services/user.service'
+import { validateScheme } from '../../models/user';
+import UserService from '../../services/user.service'
 
 export class Register extends Component {
     constructor(props){

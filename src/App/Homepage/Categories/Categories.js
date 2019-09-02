@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import CategoryService from './services/category.service';
+import CategoryService from '../../../services/category.service';
 import { Chip } from '@material-ui/core';
 import { Carousel, Col, Row } from 'react-bootstrap';
 import { BrowserRouter as Router, Link } from "react-router-dom";

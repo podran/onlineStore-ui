@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import userService from './services/user.service';
+import userService from '../../services/user.service';
 import { Tabs, Tab, Col, Row } from 'react-bootstrap';
 import { Fab } from '@material-ui/core';
 import { PersonSharp, EmailSharp, SentimentDissatisfiedSharp, EditSharp, CheckCircleSharp, CancelSharp } from '@material-ui/icons'
 import { Formik, Field, Form } from 'formik';
 import { TextField } from 'formik-material-ui';
-import { simpleValidateScheme } from './models/user';
+import { simpleValidateScheme } from '../../models/user';
 
 
 export class Profile extends Component {
